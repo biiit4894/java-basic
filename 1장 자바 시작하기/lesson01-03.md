@@ -19,7 +19,6 @@
 
 JVM 위에서 애플리케이션이 실행되기 때문에 자바로 프로그래밍하면 윈도우, 리눅스, 맥 등 다양한 OS에서 돌아간다. 
 
-![image](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c3cad42d-a325-4900-93a8-3d3f3ddd72ba/Untitled.png)
 
 ### 객체지향언어
 
