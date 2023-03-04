@@ -412,3 +412,163 @@ public class OperatorExam2 {
 `Math.random()*10`은 0.0에서 10.0 미만의 랜덤한 값을 반환한다.
 
 `(int)(Math.random()*10)` : 이렇게 `int`형으로 형변환을 하면 **소수점 뒤의 값은 없어진다.** 즉 0~9 사이의 값을 변수 `a`와 변수 `b`에 담아주겠다는 이야기다.
+
+
+# LESSON 11 연산자 우선순위
+
+연산자 우선순위랑 연산자가 여러 개 나왔을 때 어떤 연산자를 먼저 계산하느냐 하는 문제이다.
+
+## 연산자 우선순위
+
+자바에서 사용하는 연산자의 우선순위는 다음 표와 같다. 위에서 아래로 내려갈수록 연산자 우선순위가 낮아진다. 
+
+| 0 | 최우선 연산자 | . [] () |
+| --- | --- | --- |
+| 1 | 단항 연산자 | ++ -- ! ~ +/- : 부정, bit변환 > 부호 > 증감 |
+| 2 | 산술 연산자 | * / % + - |
+| 3 | 시프트 연산자 | >> << >>> |
+| 4 | 비교 연산자 | > < >= <= == != |
+| 5 | 비트 연산자 | & | ^ ~ |
+| 6 | 논리 연산자 | && || ! |
+| 7 | 삼항 연산자 | 조건식 ? |
+| 8 | 대입 연산자 | = *= /= %= += -= |
+- ‘`&&`’ : 논리곱, and 연산자.
+    - 양쪽이 모두 true일 때만 true를 반환.
+- ‘`||`’ : 논리합, or 연산자
+    - 한쪽만 true여도 true를 반환한다.
+- ‘`!`’ : 부정의 의미, not 연산자.
+    - `boolean`의 값을 역전시킨다.
+
+먼저 `OperatorExam3` 클래스를 만들어 `int`형 변수 세 개를 선언하고 각각 5, 10, 15라는 값을 넣는다. 그리고 세 변수를 연산해 값을 출력한다. 
+
+‘`a - b * c` ’라는 계산식을 출력한다. 곱하기가 빼기보다 우선순위가 높기 때문에 ‘`b * c`‘를 먼저 연산한다. 
+
+```java
+public class OperatorExam3 {
+	
+	public static void main(String[] args) {
+		int a = 5;
+		int b = 10;
+		int c = 15;
+		
+		System.out.println(a - b * c);
+	}
+}
+
+// -145
+```
+
+두 번째 식은 ‘`a - b`’를 먼저 계산하고 그다음에 `c`를 곱하므로 첫 번째 식과는 결과가 다르게 나온다.
+
+```java
+public class OperatorExam3 {
+	
+	public static void main(String[] args) {
+		int a = 5;
+		int b = 10;
+		int c = 15;
+		
+		System.out.println(a - b * c);
+		**System.out.println((a - b) * c);**
+	}
+}
+
+// -145
+// -75
+```
+
+이번에는 “a가 5보다 크거나, and 연산자, b가 5보다 큽니까?” 라고 물어보는 연산식이다. 비교 연산자가 논리 연산자보다 우위이기 때문에 `false && true`를 연산해야 한다. 
+
+```java
+public class OperatorExam3 {
+	
+	public static void main(String[] args) {
+		int a = 5;
+		int b = 10;
+		int c = 15;
+		
+		**System.out.println(a > 5 && b > 5);**
+	}
+}
+
+// false
+```
+
+```java
+public class OperatorExam3 {
+	
+	public static void main(String[] args) {
+		int a = 5;
+		int b = 10;
+		int c = 15;
+		
+		System.out.println(a > 5 && b > 5);
+		System.out.println(a > 5 || b > 5);
+	}
+}
+
+// false
+// true
+```
+
+### 증감 연산자 조심!
+
+이번에는 증감 연산자를 살펴보자.
+
+먼저 **전위 연산자**이다. ‘`++a - 5`’ 라는 연산식에서 연산자 우선순위를 생각해보면.. 증감연산자는 단항 연산자이므로 산술 연산자보다 우선순위가 높다. 즉, 증감 연산자를 먼저 실행하고 그 다음에 5를 뺀다. 
+
+증감 연산자인 ‘`++a`’는 ‘`a = a + 1`’과 같으므로 연산 결과는 6이다. 6에서 5를 빼면 결과는 1이므로 결과는 1을 출력한다.
+
+이때 a에는 어떤 값이 들어있을까? ‘`a = a + 1`’이므로 6이 들어있다. 
+
+```java
+public class OperatorExam3 {
+	
+	public static void main(String[] args) {
+		int a = 5;
+		int b = 10;
+		int c = 15;
+		
+		**System.out.println(++a - 5);**
+		System.out.println(a);
+	}
+}
+
+// 1
+// 6
+```
+
+만약 **후위 연산자**라면 어떻게 될까?
+
+증가시키기 전에 연산하고 출력하기 때문에 0을 출력한다. 출력한 후에 ‘`a++`’, 즉 ‘`a = a + 1`’을 수행하므로 a에는 6이라는 값이 들어있다. 
+
+```java
+public class OperatorExam3 {
+	
+	public static void main(String[] args) {
+		int a = 5;
+		int b = 10;
+		int c = 15;
+		
+		**System.out.println(a++ - 5);
+		System.out.println(a);**
+	}
+}
+
+// 0
+// 6
+```
+
+### 전위 연산자, 후위 연산자 비교
+
+`**System.out.println(++a - 5)` 의 연산 순서**
+
+1. ++a 수행 → 5 + 1 → a는 6
+2. a - 5 수행 → 6 - 5 → 결과는 1
+3. System.out.println()에 값 1 전달
+
+`**System.out.println(a++ - 5)`의 연산 순서**
+
+1. a - 5 수행 → 5 - 5 → 결과는 0
+2. System.out.println()에 1의 값 0을 전달
+3. a++ 수행 → 5 + 1 → a는 6
