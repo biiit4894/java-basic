@@ -250,3 +250,165 @@ public class OperatorExam {
 	}
 }
 ```
+
+# LESSON 10 비교 연산자
+
+이번 장에서는 비교 연산자와 대입 연산자를 살펴본다. 
+
+`==` : 같다
+
+`!=` : 다르다
+
+`>` : 크다
+
+`<` : 작다
+
+`>=` : 크거나 같다
+
+`<=` : 작거나 같다
+
+비교 연산자는 항상 실행결과로 `boolean` 값인 `true` 또는 `false`를 반환한다.
+
+## 비교 연산자
+
+`OperatorExam2` 클래스를 만들어 `int`형 변수 `i`와 `j`에 10을 넣는다. 그리고 `j`와 `j`, 두 변수에 비교 연산자를 사용한 뒤 결과를 출력한다. 첫 번째로 `i`와 `j`가 같은지를 물어본다. 
+
+```java
+public class OperatorExam2 {
+	
+	public static void main(String[] args) {
+		int i = 10;
+		int j = 10;
+		
+		**System.out.println(i == j);**
+	}
+}
+// true
+```
+
+지금까지 사용한 ‘`=`'은 변수에 값을 넣는다는 의미였다. ‘`==`'는 왼쪽 피연산자와 오른쪽 피연산자가 서로 같은지를 물어보는 것이다. 
+
+두 번째로 `i`와 `j`가 다른지를 물어보자. 
+
+```java
+public class OperatorExam2 {
+	
+	public static void main(String[] args) {
+		int i = 10;
+		int j = 10;
+		
+		System.out.println(i == j);
+		**System.out.println(i != j);**
+	}
+}
+
+// true
+// false
+```
+
+i와 j의 값은 같기 때문에 false를 출력한다. 
+
+앞에서 봤던 비교 연산자들을 차례대로 실행하자.
+
+```java
+public class OperatorExam2 {
+	
+	public static void main(String[] args) {
+		int i = 10;
+		int j = 10;
+		
+		System.out.println(i == j);
+		System.out.println(i != j);
+		System.out.println(i < j);
+		System.out.println(i <= j);
+		System.out.println(i > j);
+		System.out.println(i >= j);
+	}
+}
+
+// true
+// false
+// false
+// true
+// false
+// true
+```
+
+## 대입 연산자
+
+### 단순 대입 연산자
+
+‘ `=` ’ : 왼쪽에 있는 피연산자인 변수에 오른쪽에 있는 피연산자의 값을 저장해주세요.
+
+### 복합 대입 연산자
+
+복합 대입 연산자를 이용하면 연산식을 간단하게 쓸 수 있다.
+
+‘ `+=` ’, ‘ `-=` ’ : 정해진 연산을 수행한 후에 결과를 변수에 저장한다. 
+
+```java
+public class OperatorExam2 {
+	
+	public static void main(String[] args) {
+		int i = 10;
+		int j = 10;
+		
+		i += 10; // i = i + 10
+		System.out.println(i);
+	}
+}
+
+// 20
+```
+
+```java
+public class OperatorExam2 {
+	
+	public static void main(String[] args) {
+		int i = 10;
+		int j = 10;
+		
+		**i += 10;**
+		System.out.println(i);
+		System.out.println(i **-=** 5); // i = i - 5
+	}
+}
+```
+
+## 비교 연산자 실습
+
+```java
+public class OperatorExam2 {
+	
+	public void calculate(int a, int b) {
+		
+		// a가 b보다 큰지 비교한 결과(true 또는 false)를 c에 저장하세요.
+		**boolean c = a > b;**
+		
+		// a와 b가 같은지 비교한 결과를 d에 저장하세요.
+		**boolean d = a == b;**
+		
+		// a와 b가 다른지 비교한 결과를 e에 저장하세요.
+		**boolean e = a != b;**
+		
+		System.out.println(a + "은(는) " + b + "보다 큽니까?" + c);
+		System.out.println(a + "은(는) " + b + "와(과) 같습니까?" + d);
+		System.out.println(a + "은(는) " + b + "와(과) 다릅니까?" + e);
+	}
+	
+	public static void main(String[] args) {
+		// 0~10 사이 값을 랜덤하게 변수 a와 b에 넣어준다.
+		int a = (int)(Math.random()*10);
+		int b = (int)(Math.random()*10);
+		new OperatorExam2().calculate(a, b);
+	}
+}
+```
+
+`int a = (int)(Math.random()*10);`
+
+`Math.random()`은 0.0 이상에서 1.0 미만의 랜덤한 `double`형의 실숫값을 반환한다.
+
+`Math.random()*10`은 0.0에서 10.0 미만의 랜덤한 값을 반환한다.
+
+`(int)(Math.random()*10)` : 이렇게 `int`형으로 형변환을 하면 **소수점 뒤의 값은 없어진다.** 즉 0~9 사이의 값을 변수 `a`와 변수 `b`에 담아주겠다는 이야기다.
