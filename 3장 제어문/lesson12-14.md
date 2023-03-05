@@ -252,3 +252,209 @@ public class IfExam{
 문제에서 제시한 `IfTest`라는 메서드는 인자로 들어오는 값에 따라서 실행결과가 달라진다. `main` 메서드에서 `exam.IfTest(6)`이라고 호출하면 6이라는 값을 매개변수로 전달한다. 
 
 `public int IfTest(int value)` 이렇게 정의된 메서드를 실행하는데 이때 메서드의 매개변수로 선언한 `int value`에 인자로 보낸 6이라는 값을 저장한다.
+
+
+# LESSON 13 논리 연산자
+
+논리 연산자나 삼항 연산자는 앞에서 배운 산술 연산자나 비교 연산자에 비해 약간 더 어렵다.
+
+알아볼 논리 연산자는 모두 네 가지이다. 
+
+첫 번째 A와 B는 피연산자이고, 그 옆에 나온 네 가지 연산자가 논리 연산자이다.
+
+| A | B | A && B | A || B | !A |  A ^ B |
+| --- | --- | --- | --- | --- | --- |
+| true | true | true | true | false | false |
+| true | false | false | true | false | true |
+| false | true | false | true | true | true |
+| false  | false | false | false | true | false |
+
+## 논리곱 &&(and 연산자)
+
+- 피연산자가 모두 `true`일 때만 `true`를 반환한다.
+
+```java
+public class LogicalOperatorExam {
+	public static void main(String[] args) {
+		boolean b1 = true;
+		boolean b2 = false;
+		boolean b3 = true;
+		
+		System.out.println(b1 && b2);
+		System.out.println(b1 && b3);
+	}
+}
+
+// false
+// true
+```
+
+## 논리합 || (or 연산자)
+
+- 피연산자가 둘 중 하나만 `true`값을 가져도 `true`를 반환한다.
+
+```java
+public class LogicalOperatorExam {
+	public static void main(String[] args) {
+		boolean b1 = true;
+		boolean b2 = false;
+		boolean b3 = true;
+		
+		System.out.println(b1 || b2);
+		System.out.println(b1 || b3);
+		System.out.println(b2 || b2);
+	}
+}
+
+// true
+// true
+// false
+```
+
+## 논리부정 ! (not 연산자)
+
+- 단항 연산자이므로 피연산자 중 A만 보면 된다.
+- A 앞에 붙어서 결과를 반대로 바꿔준다.
+
+```java
+public class LogicalOperatorExam {
+	public static void main(String[] args) {
+		boolean b1 = true;
+		boolean b2 = false;
+		
+		System.out.println(!b1);
+		System.out.println(!b2);
+	}
+}
+
+// false
+// true
+```
+
+이런 논리 연산자는 언제 사용할까?
+
+먼저 `int`형 변수 `score`를 선언하고, 88이라는 값을 넣는다. 그리고 `if문`을 사용해 원하는 조건을 작성한다. 즉, 70~100의 값은 70보다 크거나 같고, 100보다 작거나 같아야 한다. 
+
+```java
+public class LogicalOperatorExam {
+	public static void main(String[] args) {
+		int score = 88;
+		**if(score >= 70 && score <= 100) {
+			System.out.println("성공");
+		} else {
+			System.out.println("실패");
+		}**
+	}
+}
+
+// 성공
+```
+
+이런 조건을 처리할 때 간혹 조건 하나로 문제를 해결하려고 하지만, 자바는 이를 조건 하나로 처리할 문법은 없으므로, 조건을 나누어 생각해야 한다. 
+
+변수 `score`의 값을 범위 밖 값으로 바꿔서 실행하면 ‘`실패`’라고 뜬다.
+
+```java
+public class LogicalOperatorExam {
+	
+	public static void main(String[] args) {
+		**int score = 65;**
+		if(score >= 70 && score <= 100) {
+			System.out.println("success");
+		} else {
+			System.out.println("fail");
+		}
+	}
+}
+
+// fail
+```
+
+## 배타적 논리합 ^
+
+- 피연산자가 하나는 `true`이고, 하나는 `false`일 때만 `true`를 반환한다.
+- ******************************************두 개가 달라야만 `true`를 반환한다.**
+
+```java
+public class LogicalOperatorExam {
+	public static void main(String[] args) {
+		boolean b1 = true;
+		boolean b2 = false;
+		boolean b3 = true;
+		
+		System.out.println(b1 ^ b3);
+		System.out.println(b1 ^ b2);
+	}
+}
+
+// false
+// true
+```
+
+→ 배타적 논리합은 두 식이 다를 때 `true`를 반환한다. 
+
+## 논리 연산자 실습 1
+
+나이가 19세 이하이거나 60세 이상이면 할인해주려고 한다. 
+
+`int`형 변수 `age`의 값을 검사해 할인 대상인지 알아보겠다. 할인 대상이라면 `isDiscount`에 `true`를, 그렇지 않으면 `isDiscount`에 `false`를 저장하도록 만들어보자. 
+
+```java
+public class LogicalOperatorExam {
+	
+	public boolean isAgeDiscountable(int age) {
+		boolean isDiscount = false;
+		if(**age <= 19 || age >= 60**) {
+			isDiscount = true;
+		} else {
+			isDiscount = false;
+		}
+	
+		return isDiscount; // 결과 테스트를 위한 코드
+	}
+
+	// 실행을 위한 코드. 수정하지 말 것.
+	public static void main(String[] args) {
+		LogicalOperatorExam exam = new LogicalOperatorExam();
+		System.out.println(exam.isAgeDiscountable(15));
+		System.out.println(exam.isAgeDiscountable(27));
+		System.out.println(exam.isAgeDiscountable(61));
+	}
+}
+
+// true
+// false
+// true
+```
+
+## 논리 연산자 실습 2
+
+`int`형 변수 `age`의 값을 검사해 `age`가 20대인지 검사하려고 한다.  20대라면 `isTwenties`에 `true`를, 그렇지 않으면 `false`를 저장하도록 만들어라.
+
+```java
+public class LogicalOperatorExam {
+	
+	public boolean isAgeTwenties(int age) {
+		boolean isTwenties = false;
+		if(**age >= 20 && age <= 29**) {
+			isTwenties = true;
+		} else {
+			isTwenties = false;
+		}
+		
+		return isTwenties; // 결과 테스트를 위한 코드입니다.
+	}
+
+	// 실행을 위한 코드. 수정하지 말 것.
+	public static void main(String[] args) {
+		LogicalOperatorExam exam = new LogicalOperatorExam();
+		System.out.println(exam.isAgeTwenties(19));
+		System.out.println(exam.isAgeTwenties(25));
+		System.out.println(exam.isAgeTwenties(30));
+	}
+}
+
+// false
+// true
+// false
+```
