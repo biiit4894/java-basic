@@ -458,3 +458,100 @@ public class LogicalOperatorExam {
 // true
 // false
 ```
+
+
+# LESSON 14 삼항 연산자
+
+if문과 살짝 비슷한 삼항 연산자를 알아보자.
+
+우선 `TernaryExam` 클래스를 만들고 값을 담을 변수를 하나 선언한다. `int`형 변수 `b1`를 선언한 뒤에 나오는 부분이 바로 삼항 연산자이다.
+
+```java
+public class TernaryExam {
+	
+	public static void main(String[] args) {
+		int b1 = (5 > 4) ? 50 : 40;
+		
+		System.out.println(b1);
+	}
+}
+
+// 50
+```
+
+삼항 연산자 부분을 자세히 살펴보면, 먼저 괄호 안을 수행한다. 
+
+‘괄호 안 식이 참이라면 50을, 거짓이라면 40을 `b1`에 넣어주세요.’ 라는 의미.
+
+실행결과를 예상하면 5는 4부다 크기 때문에 참이다. 따라서 `b1`에는 50이라는 값이 들어있다. 
+
+부등호를 반대로 바꾸면 ‘5가 4보다 작다면 b1에 50을, 아니라면 b1에 40을 넣어달라’ 는 의미.
+
+```java
+public class TernaryExam {
+	
+	public static void main(String[] args) {
+		int b1 = (5 < 4) ? 50 : 40;
+		
+		System.out.println(b1);
+	}
+}
+
+// 40
+```
+
+삼항 연산자의 처리 흐름은 `if`문과 비슷하다. 예를 들어 앞에서 실습한 삼항 연산자 코드를 `if`문으로 바꿔보자. 
+
+똑같이 값을 담을 변수를 하나 선언한다. `int`형 변수 `b2`를 선언하고 일단 0으로 초기화한다. 그리고 `if`문을 사용한다. 조건도 똑같이 ‘5가 4보다 크다’로 작성한다. 이 조건이 참이라면 `b2`에 50을 넣고, 거짓이라면 `b2`에 40을 넣는다. 
+
+```java
+public class TernaryExam {
+	
+	public static void main(String[] args) {
+		
+		**int b2 = 0;
+		if(5 > 4) {
+			b2 = 50;
+		} else {
+			b2 = 40;
+		}**
+		
+		System.out.println(b2);
+	}
+}
+```
+
+## 정리
+
+삼항 연산자의 괄호 안에는 다양한 조건식이 들어올 수 있다. 
+
+5나 4처럼 정해진 숫자가 아니라 어떤 값이 들어올 지 모르는 변수가 들어올 수도 있다.
+
+- `(**조건식) ? 피연산자1 : 피연산자2**`
+    - 조건식의 연산 결과가 참이면 결과는 피연산자 1
+    - 조건식의 연산 결과가 거짓이면 결과는 피연산자 2
+
+## 삼항 연산자 실습
+
+`hour`에는 현재 시간이 들어있다. 삼항연산자를 이용해 `hour`가 12보다 작으면 “오전”, 그렇지 않으면 “오후”라는 값을 `ampm`이 가지도록 수정하라. 
+
+- `Calendar` 객체는 내 컴퓨터의 현재 시간을 이용해 객체를 생성한다.
+- `Calendar`를 사용하면 현재 시스템상 시간을 구할 수 있다.
+    - 시간은 24시간 단위 (ex. 오후 1시일 경우 13시)로 나온다.
+
+```java
+import java.util.Calendar;
+
+public class TernaryExam {
+	public static void main(String[] args) {
+		// hour에는 현재 시간이 24시간 단위로 들어있다.
+		int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+		String ampm;
+		// 삼항 연산자를 이용해 ampm에 오전 또는 오후의 값을 가지도록 만들어보세요.
+		**ampm = (hour < 12) ? "AM" : "PM";**
+		System.out.println("It is "+hour+" o'clock, "+ampm+".");
+	}
+}
+
+// It is 20 o'clock, PM. (테스트 당시 시간 20:33)
+```
