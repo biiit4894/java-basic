@@ -404,3 +404,221 @@ public class DoWhileExam{
 ```
 
 ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9dad46a1-f80e-4991-ba1a-3a254693445d/Untitled.png)
+
+
+# LESSON 18 for 문
+
+마지막 반복문으로 `for`문을 배워보자. `for`문은 구문 자체에 변수 초기화, 조건식, 증감식 부분이 모두 들어있다.
+
+`for(변수 초기화; 조건식; 증감식) { 실행할 문장들; }`
+
+실습을 통해 더 자세히 알아보자. `for`문으로 1~100까지 합을 구하는 프로그램을 작성하자. 
+
+## 1~100까지의 합 구하기
+
+for문은 `for`이라는 키워드로 시작한다. 첫번째로 변수를 초기화한다. 보통 변수를 초기화하는 방법과 똑같다. `int`형 변수 `i`에 1~100까지의 합을 구하므로 1로 초기화한다. 첫번째 부분이 끝나면 반드시 세미콜론으로 구분한다.
+
+두 번째로 조건식을 넣는다. 조건식은 i가 100보다 작거나 같을 때까지 수행한다고 넣으면 된다. 세미콜론도 잊지 말고 넣어준다.
+
+세 번째로 `i`를 변경시킬 수 있는 식을 넣는다. `i`를 하나씩 증가시켜야 하므로 `i++`라고 증감연산자를 사용한다.
+
+ 
+
+```java
+public class ForExam {
+	public static void main(String[] args) {
+		**for(int i = 1; i <= 100; i++) {
+		}**
+	}
+}
+```
+
+이렇게 `for`문은 구문 자체에서 초기화하고 조건식을 주고 그 값을 증감시키는 부분까지 한 줄로 들어간다. 
+
+첫 번째 부분의 초기화는 한 번만 수행한다. 다음으로 두 번째 부분에서 조건을 비교하고 만족한다면 `for`문의 블록을 수행한다. 그리고 세 번째 부분에서 `i++`를 수행한다. 다시 두 번째 부분에서 조건을 비교하고 만족한다면 블록을 수행한다. 이때 만족하지 않는다면 블록을 빠져나온다. 이렇게 반복해 수행한다. 
+
+자, 1~100까지의 합을 구해보자. 합을 담을 수 있는 `total`이라는 변수를 선언한다. 이 `total` 변수에 `i`를 계속 누적시킨다. 
+
+`for`문을 모두 수행한 뒤 `total` 값을 출력하면 `for`문을 잘 수행했는지 알 수 있다. 한 번 실행해보자.
+
+```java
+public class ForExam {
+	public static void main(String[] args) {
+		int total = 0;
+		for(int i = 1; i <= 100; i++) {
+			total += i;
+		}
+		System.out.println(total);
+	}
+}
+
+// 5050
+```
+
+`for` 문에서 `i`가 100이 될 때까지 `total`에 `i`를 계속 누적시켰다. 반복을 마친 다음 `total`을 출력하니 콘솔에 1~100까지 숫자의 합인 5050을 출력했다. 
+
+## 1~100까지 숫자 중에서 짝수의 합만 구하기(`continue`)
+
+이번에는 1~100까지 숫자 중에서 짝수의 합만 구해보자. 앞서 해본 실습은 모든 `i`의 값을 `total`에 누적시켰다. 모든 `i`의 값이 아니라 짝수만 누적시키고 싶은 경우에는 ************조건문************을 사용해야 한다. `i`를 2로 나누었을 때 나머지가 0이라면 짝수이다. 홀수라면 0이 아닐 것이다. `i`가 홀수일 경우에는 `for` 블록 안 내용, 즉 `total`에 값을 누적시키지 말라는 의미로 `continue`를 사용한다. 
+
+```java
+public class ForExam {
+	public static void main(String[] args) {
+		int total = 0;
+		for(int i = 1; i <= 100; i++) {
+			**if(i % 2 != 0) {
+				continue;
+			}**
+			total = total + i;
+		}
+		System.out.println(total);
+	}
+}
+
+// 2550
+```
+
+`**continue`는 반복문에 해당하는 ‘`total = total + i`'를 실행시키지 않고, 다음 부분으로 넘어간다. 여기서는 세 번째 부분인 증감식 ‘`i++`’로 넘어가는 것이다.** `i`가 1인 경우 `continue`를 만나 `total`에 누적되지 않고 1을 더한다. 그럼 `i`는 2가 되고, `i`가 2인 경우 `if`문을 수행하지 않기 때문에 `total`에 누적된다. 이렇게 반복해 수행하면 `total` 변수에는 짝수만 쭉 누적된다. 한번 시행해보니
+
+```java
+// 2550
+```
+
+5050이 아니라 짝수의 합인 2550을 출력한다. 
+
+### 내가 처음 짠 코드
+
+```java
+public class ForExam {
+	public static void main(String[] args) {
+		int total = 0;
+		for(int i = 1; i <= 100; i++) {
+			if(i % 2 == 0) {
+				total += i;
+			}
+		}
+		System.out.println(total);
+	}
+}
+```
+
+## 1~100까지 숫자의 합을 구하되 숫자가 50일 때 반복문 멈추기(`break`)
+
+이번에는 `i`가 100이 아니라 50이었을 때 반복문을 멈추고 싶은 경우를 생각해보자. 이럴 경우 `break` 구문을 사용할 수 있다. 
+
+50까지는 반복문을 수행해야 하므로 50까지는 `total`에 누적시키고, `i`가 50일 경우 `break`로 끊겠다는 의미이다. 
+
+`continue`는 **그 아래에 있는 문장들만 수행시키지 않고 다시 `for`문으로 올라가서 수행**했지만, `break`는 **만난 지점에서 반복문을 아예 빠져나가** 버린다.
+
+```java
+public class ForExam {
+	public static void main(String[] args) {
+		int total = 0;
+		for(int i = 1; i <= 100; i++) {
+			total = total + i;
+			**if(i == 50) {
+				break;
+			}**
+		}
+	} 
+}
+
+// 1275
+```
+
+```java
+public class ForExam {
+	public static void main(String[] args) {
+		int total = 0;
+		for(int i = 1; i <= 100; i++) {
+			total = total + i;
+		**if(i == 50) {
+			break;
+		}**
+	}
+	System.out.println(total);
+	}
+}
+
+// 1275
+```
+
+실행하면 50까지의 합만 출력한다. 
+
+반복문에서 조건문과 `break`, `continue` 구문을 사용하면 특정 부분은 수행하지 않고 나머지만 수행한다든가, 특정 부분까지만 수행하고 반복문을 빠져나온다든가 등 여러 상황을 작성할 수 있다. `break`, `continue` 구문은 `for`문만이 아니라 `while`, `do while` 문에서도 사용할 수 있다. 어떤 조건으로 프로그램을 수행시키느냐에 따라서 다양하게 사용할 수 있으니 잘 기억했다가 사용하자.
+
+## for문 실습
+
+`for` 문을 이용해 1~100까지 숫자 중 짝수만 출력해보자.
+
+```java
+public class ForExam {
+	public static void main(String[] args) {
+		for(int i = 1; i <= 100; i++) {
+			if(i % 2 == 0) {
+				System.out.println(i);
+			}
+		}
+	}
+}
+
+/*
+2
+4
+6
+8
+10
+.
+.
+.
+94
+96
+98
+100
+*/
+```
+
+```java
+public class ForExam {
+	public static void main(String[] args) {
+		for(int i = 1; i <= 100; i++) {
+			**if(i % 2 != 0) {
+				continue;
+			}
+			System.out.println(i);**
+		}
+	}
+}
+
+/*
+2
+4
+6
+8
+10
+.
+.
+.
+94
+96
+98
+100
+*/
+```
+
+초기문에서 처음 한 번만 초깃값을 부여하고, 조건이 만족할 때만 조건문을 실행하고, 증감 부분을 실행해 `i`값을 바꿔준다. 그 다음에는 조건을 비교하는 부분부터 조건에 만족하지 않을 때까지 반복 수행하게 된다. 따라서 다음과 같은 순서에 따라 실행한다. 
+
+![222.JPG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/3802d464-cda4-4c60-9936-11b1ce303c5f/222.jpg)
+
+1~100까지 출력하면 되므로 `i`를 1로 초기화하고, 조건은 `i`가 100보다 작거나 같을 때까지 반복하도록 설정한다. 조건에 만족했을 때 실행하고 싶은 문장은 `i`가 짝수일 때만 출력하면 되므로 `if` 문을 이용해 `i`를 2로 나눈 나머지가 0과 같을 때만 `i`를 출력하도록 한다. 
+
+## 생각해볼 거리
+
+어떤 경우에 `for`이나 `while`을 사용하는 것이 좋을까?
+
+예를 들어, 다음 문장을 처리할 때 어떤 반복문을 쓰는 것이 좋을까?
+
+1. 영어 단어 10개만 외우세요.
+    1. `for`문이 적합
+2. 영어 단어를 한 시간 동안 외우세요.
+    1. `while` 문이 적합
