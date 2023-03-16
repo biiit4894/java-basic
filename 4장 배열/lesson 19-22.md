@@ -180,3 +180,263 @@ array[4] = 5;
 // array가 가리키는 배열의 인덱스는 4번까지이므로 
 // array[5]라고 사용하면 오류를 발생시킬테니 주의하자. 
 ```
+
+# LESSON 20 배열 사용하기
+
+1차원 배열을 선언하고, 사용하는 방법을 배웠다. 배열에 접근할 때는 인덱스를 통해서 접근했다. 배운 부분을 복습해보자.
+
+`int`형 배열을 하나 정의한다. `iarray`라는 이름으로 정숫값 100개를 담을 수 있는 배열을 하나 선언했다. 이 배열에 값을 담을 때는 어떻게 했을까? 다음 코드처럼 배열의 0번 인덱스에 1이라는 값을 담고, 1번 인덱스에 2라는 값을 담았다. 
+
+```java
+public class ArrayWithFor {
+	public static void main(String[] args) {
+		**int[] iarray = new int[100];
+		iarray[0] = 1;
+		iarray[1] = 2;**
+	}
+}
+```
+
+그런데 100개짜리 배열 안에 1~100까지 값을 차례대로 담으려면 어떻게 해야 할까? 반복적으로 값을 넣어줘야 한다. 이렇게 같은 작업을 반복하는 경우 하나씩 손으로 넣을 필요 없이 앞에서 배운 반복문을 사용하면 된다.
+
+`for`문을 사용해 1~100까지 값을 배열 안에 넣는 코드를 작성한다. `for`라고 선언하고, 첫 번째 부분에 `int i`를 0으로 초기화한다. 여기서 초깃값으로 선언한 `i`는 인덱스로 사용할 것이다. 배열은 0번 인덱스부터 시작하니까 0으로 초기화한다. 
+
+```java
+for(int i = 0; 조건식; 증감식)
+```
+
+두 번째 부분에는 `for` 문을 언제까지 실행할지 조건을 넣어준다. 앞에서 선언한 배열이 100개짜리이므로 99번 인덱스까지 실행한다. ‘`i < 100`’ 이라고 넣어주면 `for`문이 99번까지 실행할 것이다. 
+
+```java
+for(int i = 0; i < 100; 증감식)
+```
+
+## `array.length`
+
+여기서 100이라는 숫자는 배열 크기이다. 만약 배열 크기가 달라지면 이 숫자도 수정해야 한다. 매번 수정하지 않으려면 어떻게 하면 좋을까? 프로그램이 배열 크기를 알아내서 넣으면 될 것이다. 이럴 때 배열의 길이를 가리키는 `length`라는 속성을 사용한다. 100이라고 적는 대신에 `배열명.length`라고 적으면 배열 크기를 출력한다. 여기서는 `iarray`라는 배열이므로 `iarray.length`라고 적는다. `배열명.length`는 자주 사용하므로 꼭 기억해두자.
+
+```java
+for(int i = 0; **i < iarray.length**; 증감식)
+```
+
+세 번째 부분에는 0번부터 차례대로 1씩 증가하도록 넣어준다.
+
+```java
+for(int i = 0; i < iarray.length; **i++**)
+```
+
+이렇게 `for`문을 작성했다. `for` 블록 안에는 `iarray[]` 괄호 안에 인덱스를 넣어 값을 넣는다. 앞서 1차원 배열에서 사용한 코드처럼 0번, 1번, 2번 … 으로 들어가야 하는데 그 부분을 `i`라는 인덱스로 넣는다. `for`문이 동작하면 `i`가 바뀌므로 인덱스 역시 자동으로 바뀔 것이다. 그리고 각 인덱스에 해당하는 배열에 값을 넣을 때 1부터 넣을 예정이므로 `i`에 1씩 더해서 넣겠다. 그러면 인덱스가 0번일 때 1이 된다. 이제 1~100까지 해당 배열에 값을 채워 넣을 수 있다.
+
+```java
+public class ArrayWithFor {
+	public static void main(String[] args) {
+		int[] iarray = new int[100];
+		
+		**for(int i = 0; i < iarray.length; i++) {
+			iarray[i] = i + 1;
+		}**
+	}
+}
+```
+
+자, 이렇게 100개짜리 배열 안에 1~100까지 값을 차례대로 넣었다. 이번에는 배열에 들어있는 값을 모두 꺼내서 더하는 코드를 작성하자.
+
+0번 인덱스부터 99번 인덱스까지 접근해야 하므로 아까 만들었던 `for` 문과 똑같이 만들면 된다. 
+
+```java
+for(int i = 0; i < iarray.length; i++)
+```
+
+다음으로 `for` 블록 안 내용을 작성한다. `iarray.length`까지 증가하면서 전에는 값을 넣었다면 이번에는 값을 꺼낸다. 그리고 꺼낸 값은 계속 더해준다. 이 경우 계속 더하면서 그 값을 가져야 할 변수가 필요하다. 
+
+이때 변수를 어디에 선언해야 할까? 변수는 선언하는 지점이 어디냐에 따라서 그 변수를 사용할 수 있는 범위가 달라진다. 이를 변수의 ******************************스코프(scope)******************************라고 한다. 기본적으로 변수를 선언한 지점을 감싼 괄호 안이 변수의 스코프이다. 변수는 선언할 때 생성했다가 해당 블록이 끝날 때 소멸한다.
+
+다음 코드를 보자. 앞에서 작성한 1~100까지 값을 넣은 `for` 문이 있고, 지금 작성한 값을 꺼내려는 `for`문이 있다. 두 `for` 문에서 똑같이 변수 `i`를 사용한다. 같은 이름으로 선언해도 아무런 문제가 일어나지 않은 이유가 바로 변수의 스코프 때문이다. `i`라는 변수는 `for` 문이 시작할 때 생성했다가 `for`문이 끝날 때 없어진다. 그러므로 또다시 `i`를 선언해도 문제없던 것이다.
+
+```java
+public class ArrayWithFor {
+	public static void main(String[] args) {
+		int[] iarray = new int[100];
+		
+		for(int i = 0; i < iarray.length; i++) {
+			iarray[i] = i + 1;
+		}
+		
+		**for(int i = 0; i < iarray.length; i++) {
+			
+		}**
+	}
+}
+```
+
+그렇다면 계속 값을 더해줘야 하는 변수를 선언할 때는 이 변수를 어디에 선언해야 할 지 생각해보자. `for` 블록 안에서 선언한 변수는 `for`블록 안에서만 사용할 수 있다. 블록 안에 포함되지는 않지만, `for` 구문에 포함된 `int i`도 `for` 블록 안에서만 사용된다. 
+
+변수의 스코프는 **그 변수가 선언된 블록**이라고 생각하면 된다. 그러므로 값을 더한 결괏값을 저장할 변수를 `for` 블록 안에 선언하면 `for` 블록 바깥에서는 사용하지못한다. 또한, `for` 블록을 실행하고 다시 반복하는 시점에 변수를 매번 새롭게 선언하므로 값을 지속적으로 저장할 수가 없다. 따라서 `for` 블록 안에 값을 저장할 변수를 선언하면 안 된다. **값을 더할 변수 `sum`은 `for` 블록 밖에 선언**하고, `for` 블록 안에서는 배열 안에 들어있는 값을 차례대로 꺼내 이 변수에 계속 더해준다. 출력은 `for` 문이 모두 끝나고 한 번만 한다.
+
+```java
+public class ArrayWithFor {
+	public static void main(String[] args) {
+		int[] iarray = new int[100];
+		
+		for(int i = 0; i < iarray.length; i++) {
+			iarray[i] = i + 1;
+		}
+		
+		**int sum = 0;		
+		for(int i = 0; i < iarray.length; i++) {
+			sum = iarray[i];
+		}
+		
+		System.out.println(sum);**
+	}
+}
+
+// 100
+```
+
+`for` 블록이 끝나면 1~100까지 더한 값, `sum`을 출력해야 하는데, 실행결과 1~100까지 합계가 나오지 않았다. 원하는 결과가 나오지 않았을 때는 코드를 다시 살펴본다. 무엇이 빠졌을까?
+
+`for` 블록 안 코드는 인덱스에 있는 값을 `sum`에 순서대로 반복해 넣어주는 코드이다. 마지막에 100이라는 값이 들어있었기  때문에 100을 출력한 것이다. 값들을 더하려면 쭉 누적돼야 한다. `sum`에 0번 인덱스의 값인 1을 넣고, 1에 1번 인덱스 값 2를 더하고, 더한 값을 `sum`에 넣는 과정을 반복하며 쭉 누적시킨다. 
+
+```java
+public class ArrayWithFor {
+	public static void main(String[] args) {
+		int[] iarray = new int[100];
+		
+		for(int i = 0; i < iarray.length; i++) {
+			iarray[i] = i + 1;
+		}
+		
+		int sum = 0;		
+		for(int i = 0; i < iarray.length; i++) {
+			sum = sum + iarray[i];
+		}
+		
+		System.out.println(sum);
+	}
+}
+
+// 5050
+```
+
+코드를 수정하고 다시 실행시키니 이번에는 제대로 1~100까지 더한 값인 5050을 출력한다. 이러한 방법으로 배열을 이용하면 더 다양한 코드를 작성할 수 있다.
+
+지금까지 실습한 코드를 한 줄씩 자세히 살펴보고 넘어가겠다.
+
+## 배열에 1~100까지 값 넣기
+
+```java
+// 배열에 값을 반복해 넣어야 하므로 for 반복문을 이용한다.
+for(int i = 0; i < iarray.length; i++) {
+// 배열의 인덱스는 0부터 시작한다. 배열 크기는 **************************배열명.length**************************를 사용한다.
+			iarray[i] = i + 1;
+			// 배열의 인덱스는 0부터인데 넣고 싶은 값은 1부터이므로
+			// 인덱스에 1을 더해준 값을 넣어준다. 
+}
+```
+
+## 배열에 저장된 값 모두 더하기
+
+```java
+int sum = 0;		
+// 값을 누적시킬 변수는 반복문 밖에 선언한다.
+for(int i = 0; i < iarray.length; i++) {
+// 배열 크기만큼 반복한다. 
+	sum = sum + iarray[i];
+	// 반복문 밖에서 선언한 변수에 값을 누적시킨다.
+}
+
+System.out.println(sum);
+// 배열에 들어있는 모든 값을 누적시킨 변수를 출력한다.
+```
+
+## 배열 사용하기 실습 1
+
+`array`는 길이가 100인 배열이다. `for`문을 이용해 `array`에 순서대로 1~100까지 값을 넣어보세요.
+
+```java
+public class ArrayWithFor {
+	public int[] fill100() {
+		int[] array = new int[100];
+		// array가 1부터 100까지 순서대로 값을 가지도록 만들어보세요.
+		**for(int i = 0; i < array.length; i++) {
+			array[i] = i + 1;
+		}**
+		// 아래는 결과 평가를 위한 코드이다. 수정하지 마세요.
+		return array;
+	}
+	
+	// 아래는 실행을 위한 코드입니다. 수정하지 마세요.
+	public static void main(String[] args) {
+		ArrayWithFor exam = new ArrayWithFor();
+		int[] arr2 = exam.fill100();
+		int errCount = 0;
+		for (int i = 0; i < 100; i++) {
+			if(arr2[i] != i + 1) {
+				System.out.println("array[" + i + "]'s value is wrong");
+				errCount++;
+			}
+		}
+		if(errCount == 0)
+			System.out.println("Correct.");
+	}
+}
+```
+
+배열에 1~100까지 값을 반복해 넣도록 코드를 작성하는 문제이다. 이럴 때는 반복문을 사용한다. 범위가 정확하게 정해진 일을 수행할 때는 `for` 반복문을 이용하는 것이 효과적이다. 
+
+반복문의 초깃값으로 0을 지정한다. 배열의 인덱스가 0번부터 시작하기 때문이다. 조건문에는 반복이 끝나는 조건을 준다. 배열의 인덱스는 0부터 시작하기 때문에 배열이 가질 수 있는 인덱스의 값은 ‘배열 크기 - 1’이라고 생각하면 된다. 따라서 조건을 ‘i<100보다 작을 때까지’로 작성한다. 
+
+배열의 0번 인덱스에는 1을, 1번 인덱스에는 2를 (…) 99번 인덱스에는 100을 넣어야 한다. 인덱스도 값도 1씩 증가해야 하니까 배열의 인덱스를 넣는 부분에 `for`문에서 선언한 인덱스 변수를 사용하는 것이 효과적일 것이다. 그리고 값은 항상 인덱스보다 1이 큰 값으로 채워주면 되니까 `array[index] = index+1;`로 작성한다. 예제에서는 `index`를 변수`i`로 이용하므로 `array[i] = i + 1;`로 작성한다. 
+
+참고로 `for`문의 조건에 `index<100`으로 작성할 수도 있지만, 100이라는 값을 직접 이용하는 것보다는 배열 크기를 리턴해주는 `array.length`를 사용하는 것이 좋다. `**array.length`를 사용하면 길이가 다른 배열을 이용할 때 코드를 수정하지 않아도 되기 때문이다.** 
+
+## 배열 사용하기 실습 2
+
+`array`는 길이를 알 수 없는 `int`형 배열이다. `array`에 들어있는 값의 합을 `sum`에 저장하라. 
+
+```java
+public class ArrayWithFor {
+	public int sum(**int[] array**) {
+		int sum = 0;
+
+		// array는 길이를 알 수 없는 int형 배열이다.
+		// array에는 정수가 들어있다고 가정하고
+		// 이 아래에서 sum에 array의 모든 값을 더하세요.
+		**for(int i=0; i<array.length; i++) {
+			sum += array[i];
+		}**
+		
+		// 아래는 결과 평가를 위한 코드이다. 수정하지 마세요.
+		return sum;
+	}
+	
+	// 아래는 실행을 위한 코드이다. 수정하지 마세요.
+	public static void main(String[] args) {
+		int[]testArr = new int[4];
+		String str = "";
+		int rightResult = 0;
+		for(int i=0; i<4; i++) {
+			testArr[i] = (int)(Math.random()*100);
+			rightResult += testArr[i];
+			str+=(testArr[i]+",");
+		}
+		str=str.substring(0, str.length()-1);
+		
+		ArrayWithFor exam = new ArrayWithFor();
+		int Answer = exam.sum(testArr);
+		
+		if(Answer==rightResult) {
+			System.out.println("Correct.");
+		}
+		else {
+			System.out.println(str+" the sum of these is wrong.");
+		}
+	}
+
+}
+```
+
+이 문제는 `array`의 길이를 읽어오는 `array.length`를 사용할 수 있는지 묻는 문제이다. 메서드 안에 들어오는 배열 크기를 알 수 없으므로 배열 크기를 구하는 `array.length`를 사용해 크가보다 작을 때까지 반복 수행하게 한다. 
+
+배열의 모든 값의 합을 구하는 문제이므로 더한 값을 담을 수 있는 변수가 필요하다. 문제에서 변수 `sum`을 선언했으므로 `sum`을 사용해 값을 누적한다. `+=`연산자를 이용하면 코드를 짧게 사용할 수 있다. 익숙하지 않다면 `sum = sum + 1`과 같이 사용해도 좋다.
