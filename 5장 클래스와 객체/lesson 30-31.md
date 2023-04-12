@@ -487,3 +487,186 @@ suv�� ���� ��:4
 `static` 키워드가 붙은 요소들은 메모리에 미리 올라와 있다고 설명했다.
 
 `**static` 키워드가 붙은 필드**는 **객체를 생성하기 전에 메모리 공간을 확보**하므로, 객체를 생성할 때마다 각각 메모리 공간을 확보하는 다른 필드와 다르게 **값을 저장하는 메모리 공간을 하나만 가지므로 모두 공유\*\*한다.
+
+# LESSON 31 열거형
+
+이번 장에서는 열거형(`enum`)을 알아보자. 
+
+열거형은 서로 관련 있는 상수들을 모아서 집합으로 정의한 것이다. 자바는 열거형을 이용해 변수를 선언할 수 있다. 그리고 열거형을 변수형으로 사용한다. 열거형은 JDK 5에서 추가된 문법이다.
+
+열거형이 등장하기 전에는 `public`과 `static final`을 이용해 상수를 열거형 대신 사용했다. 그렇게 사용하면서 생길 수 있는 오류나 불편함을 해결하기 위해 추가된 것으로 생각하면 조금 쉬울 것 같다. 어떻게 사용했는지 한번 살펴보자. 먼저 `javaStudy` 패키지에 `EnumExam`이란 이름으로 클래스를 생성한다. 이 클래스에 상수를 이용해 코드를 작성하겠다.
+
+```java
+package javaStudy;
+
+public class EnumExam {
+	**public static final String MALE="MALE";
+	public static final String FEMALE="FEMALE";**
+	public static void main(String[] args) {
+		
+	}
+}
+```
+
+`static`이란 키워드를 배운 것 기억하나요? `static`하게 선언하면 객체 생성 없이 사용이 가능할 것이다. `final`은 상수를 선언할 때 사용하는 키워드이다. 문자열을 넣을 수 있도록 자료형은 `String`형을 넣어준다. 변수명은 상수를 선언할 경우 이름 전체를 대문자로 쓰는 것이 관례였으므로 모두 대문자로 써준다. 이렇게 `'MALE'`과 `'FEMALE'`이라는 상수 두 개를 선언했다.
+
+이제 `main` 메서드에서 실제로 사용해보자.
+
+```java
+package javaStudy;
+
+public class EnumExam {
+	public static final String MALE="MALE";
+	public static final String FEMALE="FEMALE";
+	public static void main(String[] args) {
+		**String gender1;**
+	}
+}
+```
+
+우선 `String`형의 `gender1`이라는 변수를 하나 선언했다. 이 `gender1`이라는 변수가 `MALE` 혹은 `FEMALE`이라는 값 중 하나만 가지게 하고 싶다. 이 경우 어떻게 해야 할까?
+
+아까 상수로 선언한 값을 이용하면 된다. `gender1`에 값을 넣어보겠다.
+
+```java
+package javaStudy;
+
+public class EnumExam {
+	public static final String MALE="MALE";
+	public static final String FEMALE="FEMALE";
+	public static void main(String[] args) {
+		String gender1;
+		**gender1 = EnumExam.MALE;
+		gender1 = EnumExam.FEMALE;**
+	}
+}
+```
+
+선언한 `static`한 필드의 값을 가져다 사용한다. `static`한 필드는 객체를 생성하지 않고도 사용할 수 있었다. 그래서 클래스명 다음에 바로 접근할 수 있었다. 
+
+```java
+'gender1 = 클래스명 + 마침표 + 상수로 선언해놓은 MALE 혹은 FEMALE'.
+```
+
+`gender`가 두 가지 값만 대응하도록 이렇게 두 가지 값을 부여한다. 
+
+그런데 이때 한 가지 문제가 발생할 수 있다. `gender1`이라는 변수에 아무 문자열이나 넣어보자.
+
+```java
+package javaStudy;
+
+public class EnumExam {
+	public static final String MALE="MALE";
+	public static final String FEMALE="FEMALE";
+	public static void main(String[] args) {
+		String gender1;
+		gender1 = EnumExam.MALE;
+		gender1 = EnumExam.FEMALE;
+		
+		**gender1 = "boy";**
+	}
+}
+```
+
+처음 의도한 것은 `gender1`에 `MALE` 혹은 `FEMALE` 두 값 중 하나만 넣는 것이었다. 그런데 `body`라는 값을 넣어도 이클립스느 에러를 발생시키지 않는다. `gender1`이라는 변수가 `string` 형이고, `MALE`, `FEMALE` 외 `boy` 같은 다른 값도 `string` 값이기 때문에 컴파일상에서 문제를 일으키지 않는 것이다. 즉, 이렇게 코드를 작성하고 실행해도 컴파일할 때 아무런 문제가 발생하지 않는다. 하지만 정작 코드를 실행시켰을 때는 원했던 값이 아니라 다른 값이 나오므로 문제가 된다. 
+
+이런 문제가 발생하지 않도록 열거형을 사용한다. 열거형을 사용하는 방법은 다음과 같다.
+
+```java
+enum 열거형 이름 { 값1, 값2 }
+```
+
+이 형식으로 클래스 아래에 열거형을 하나 선언하겠다.
+
+```java
+package javaStudy;
+
+public class EnumExam {
+	public static final String MALE="MALE";
+	public static final String FEMALE="FEMALE";
+	public static void main(String[] args) {
+		String gender1;
+		gender1 = EnumExam.MALE;
+		gender1 = EnumExam.FEMALE;
+	}
+}
+
+**enum Gender{
+	MALE, FEMALE;
+}**
+```
+
+`enum`이라고 선언하고, 열거형 이름을 `Gender`라고 붙였다. 이렇게 선언하고 중괄호 안에 넣고 싶은 값을 나열한다. `Gender`라는 열거형에는 `MALE, FEMALE` 값만 넣고 싶으므로 두 값을 넣었다. 
+
+- NOTE
+    
+    `Enum` 이름은 클래스 명명 규칙을 따르며, 세부 항목의 이름은 모두 대문자를 사용한다. 
+    
+
+선언을 마치고, 이제 코드에서 사용하자.
+
+```java
+package javaStudy;
+
+public class EnumExam {
+	public static final String MALE="MALE";
+	public static final String FEMALE="FEMALE";
+	public static void main(String[] args) {
+		String gender1;
+		gender1 = EnumExam.MALE;
+		gender1 = EnumExam.FEMALE;
+		
+		**Gender gender2;
+		gender2 = Gender.MALE;
+		gender2 = Gender.FEMALE;**
+	}
+}
+
+enum Gender{
+	MALE, FEMALE;
+}
+```
+
+상수로 정의할 때는 `string`형의 `gender1`이라고 선언했는데, 열거형으로 정의할 때는 `enum`인 `Gender` 자체가 자료형이 되기 때문에 `Gender`형으로 선언할 수 있다. `Gender`형의 변수를 `gender2`라는 이름으로 선언했다. 선언한 후 값을 부여할 때는 `gender2`에 `gender.MALE`, `gender.FEMALE` 값만 들어갈 수 있다. 앞에서처럼 전혀 다른 값인 `boy`를 넣으려고 한다면, 컴파일할 때부터 에러가 난다. 직접 입력하면 이클립스도 에러를 표시한다.
+
+`Gender`형의 변수에 `MALE`과 `FEMALE`만 대입할 수 있고 다른 값은 저장할 수 없듯이 이처럼 특정 값만 사용해야 한다면 열거형을 사용하는 것이 좋다. 
+
+- NOTE
+    
+    Q. 열거형은 `String`이라고 선언하지 않아도 되나요?
+    
+    A. 자바의 자료형은 크게 기본 자료형(`int`, `float`, `char`, …)과 참조 자료형(`class`, …)으로 나뉜다. `enum`은 참조 자료형에 속하며 `enum`형을 가진 형태의 클래스이다.
+    
+    ```java
+    enum Gender {
+    	MALE, FEMALE;
+    }
+    public class EnumExam {
+    	public static void main(String[] args) {
+    			Gender gender;
+    
+    			gender = Gender.MALE;
+    			gender = 1; // 오류 발생
+    			gender = "MALE"; // 오류 발생
+    	}
+    }
+    ```
+    
+    이 코드에서 `enum`형인 `Gender` 클래스로 선언된 `gender`에 기본 자료형인 `int`형은 당연히 들어가지 못하고, 문자열도 들어가지 못한다.
+    
+    `enum`형으로 선언된 값만 가질 수 있기 때문에 `enum`형인 `Gender.MALE`, `Gender.FEMALE`만 들어갈 수 있다.
+    
+    ```java
+    String gender1
+    Gender gender2
+    ```
+    
+    `gender1`은 `String`으로 선언했고, `gender2`는 `Gender` 클래스로 선언된 것으로 자료형이 다르다. 즉, `Gender` 내부에 선언된 `MALE`, `FEMALE`은 문자열이 아니라 `enum`형으로 인식해야 한다. 
+    
+- NOTE
+    
+    Q: `enum Gender` 내부에 `MALE`, `FEMALE` 값을 나열했는데 `MALE`과 `FEMALE`은 `EnumExam class` 내부에 선언한 `static` 상수이지 않나요? `enum`을 `EnumExam class` 밖에 선언했는데도 내부의 `static` 상수는 가져다 쓸 수 있는 건가요?
+    
+    A: `enum`으로 선언한 내용과 `EnumExam class`에 선언한 상수는 다른 것이다. `enum`은 열거형이라는 아예 다른 데이터 타입이다. 예제를 잘 보면 두 차이를 보여주기 위해 상수로 사용했을 때와 `enum`으로 사용했을 때를 설명했다. 상수로 쓰던 것의 부족한 점을 해결하기 위해서 만들어진 것이 `enum`이라고 이해하면 좋다. 
+    
+    두 번째 질문도 처음 내용이 헷갈려서 나온 질문인듯 하다. `enum`은 `EnumExam class`에 종속적인 타입이 아니므로 얼마든지 다른 클래스에서 사용할 수 있다.
